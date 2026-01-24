@@ -8,10 +8,7 @@ Tracking issues and PRs from [dexpota/kitty-themes](https://github.com/dexpota/k
 
 ## Pending
 
-| Issue | Description | Our Issue |
-|-------|-------------|-----------|
-| [#36](https://github.com/dexpota/kitty-themes/pull/36) | Solarized_Dark palette doesn't match official spec | [#15](https://github.com/open-cli-collective/kitty-themes/issues/15) |
-| [#26](https://github.com/dexpota/kitty-themes/issues/26) | color0 == background makes black text invisible | [#15](https://github.com/open-cli-collective/kitty-themes/issues/15) |
+None currently.
 
 ---
 
@@ -33,6 +30,13 @@ Tracking issues and PRs from [dexpota/kitty-themes](https://github.com/dexpota/k
 ---
 
 ## Completed
+
+### PR #16 - Solarized_Dark + color0 Visibility
+
+| Original | Type | Description |
+|----------|------|-------------|
+| [#36](https://github.com/dexpota/kitty-themes/pull/36) | PR | Solarized_Dark palette updated to official spec |
+| [#26](https://github.com/dexpota/kitty-themes/issues/26) | Issue | color0 visibility in gruvbox_dark and OneDark |
 
 ### PR #14 - Bug Fixes
 
