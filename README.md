@@ -1,7 +1,7 @@
 [iterm2-themes]: https://github.com/mbadolato/iTerm2-Color-Schemes
 [color-scripts]: https://github.com/stark/Color-Scripts/tree/master/color-scripts
 [license]: https://opensource.org/licenses/MIT
-[license-badge]:  https://img.shields.io/github/license/dexpota/kitty-themes.svg?style=for-the-badge
+[license-badge]:  https://img.shields.io/github/license/open-cli-collective/kitty-themes.svg?style=for-the-badge
 [kitty-themes-previews]: https://github.com/dexpota/kitty-themes-website/tree/master/previews
 
 ![kitty-themes](./.github/kitty-themes.jpg)
@@ -23,6 +23,8 @@
 
 ## About
 
+This is a community-maintained fork of [kitty-themes](https://github.com/dexpota/kitty-themes), originally created by [Fabrizio Destro](https://github.com/dexpota).
+
 In this repository you can find a set of themes to personalize your kitty
 terminal, these have been ported from [iTerm2-Color-Schemes][iterm2-themes]. You can find
 the previews for each theme in the [section](#previews) below or in this other
@@ -35,11 +37,11 @@ the previews for each theme in the [section](#previews) below or in this other
 1. If you want to download and use one of these theme you have two options:
     - clone the entire *kitty-themes* repository:
       ```bash
-      git clone --depth 1 https://github.com/dexpota/kitty-themes.git ~/.config/kitty/kitty-themes
+      git clone --depth 1 https://github.com/open-cli-collective/kitty-themes.git ~/.config/kitty/kitty-themes
       ```
    - or download just one theme:
       ```bash
-      THEME=https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/3024_Day.conf
+      THEME=https://raw.githubusercontent.com/open-cli-collective/kitty-themes/master/themes/3024_Day.conf
       wget "$THEME" -P ~/.config/kitty/kitty-themes/themes
       ```
 
@@ -446,13 +448,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore -->
 <table>
   <tr>
-    <td align="center"><a href="http://www.scopatz.com"><b>Anthony Scopatz</b></a><br /><a href="https://github.com/dexpota/kitty-themes/commits?author=scopatz" title="Documentation">📖</a></td>
+    <td align="center"><a href="http://www.scopatz.com"><b>Anthony Scopatz</b></a><br /><a href="https://github.com/open-cli-collective/kitty-themes/commits?author=scopatz" title="Documentation">📖</a></td>
     <td align="center"><a href="https://rckt.cc"><b>RCKT</b></a><br /><a href="#theme-orangecoloured" title="New theme added to the collection">😻</a></td>
     <td align="center"><a href="https://github.com/varmanishant"><b>varmanishant</b></a><br /><a href="#theme-varmanishant" title="New theme added to the collection">😻</a></td>
-    <td align="center"><a href="https://github.com/rlerdorf"><b>Rasmus Lerdorf</b></a><br /><a href="https://github.com/dexpota/kitty-themes/issues?q=author%3Arlerdorf" title="Bug reports">🐛</a> <a href="#ideas-rlerdorf" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://github.com/Luflosi"><b>Luflosi</b></a><br /><a href="#fix-Luflosi" title="Fixed a theme">🛠️</a> <a href="#question-Luflosi" title="Answering Questions">💬</a> <a href="https://github.com/dexpota/kitty-themes/commits?author=Luflosi" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/rlerdorf"><b>Rasmus Lerdorf</b></a><br /><a href="https://github.com/open-cli-collective/kitty-themes/issues?q=author%3Arlerdorf" title="Bug reports">🐛</a> <a href="#ideas-rlerdorf" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/Luflosi"><b>Luflosi</b></a><br /><a href="#fix-Luflosi" title="Fixed a theme">🛠️</a> <a href="#question-Luflosi" title="Answering Questions">💬</a> <a href="https://github.com/open-cli-collective/kitty-themes/commits?author=Luflosi" title="Documentation">📖</a></td>
     <td align="center"><a href="https://holyday.me"><b>Connor Holyday</b></a><br /><a href="#fix-connorholyday" title="Fixed a theme">🛠️</a></td>
-    <td align="center"><a href="https://github.com/BlueDrink9"><b>BlueDrink9</b></a><br /><a href="https://github.com/dexpota/kitty-themes/issues?q=author%3ABlueDrink9" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/BlueDrink9"><b>BlueDrink9</b></a><br /><a href="https://github.com/open-cli-collective/kitty-themes/issues?q=author%3ABlueDrink9" title="Bug reports">🐛</a></td>
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/brujoand"><b>Anders Brujordet</b></a><br /><a href="#theme-brujoand" title="New theme added to the collection">😻</a></td>
