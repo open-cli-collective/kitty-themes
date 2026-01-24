@@ -10,7 +10,7 @@ A collection of color themes for the [kitty terminal emulator](https://github.co
 
 ## Repository Structure
 
-- `themes/` - Theme configuration files (169+ themes)
+- `themes/` - Theme configuration files (175+ themes)
 - `scripts/` - Validation and utility scripts
 - `.tools/` - Legacy scripts for theme conversion and preview generation
 - `.github/workflows/` - CI/CD pipelines
