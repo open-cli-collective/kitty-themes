@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-themes:
+    name: Validate Themes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Make validator executable
+        run: chmod +x scripts/validate-themes.sh
+
+      - name: Validate all themes
+        run: ./scripts/validate-themes.sh themes
+
+  check-commit-message:
+    name: Check Commit Message
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check conventional commit format
+        run: |
+          # Get the PR title (used as commit message for squash merges)
+          PR_TITLE="${{ github.event.pull_request.title }}"
+
+          # Check if it follows conventional commit format
+          if [[ ! "$PR_TITLE" =~ ^(feat|fix|docs|test|refactor|ci|chore)(\(.+\))?!?:\ .+ ]]; then
+            echo "❌ PR title must follow conventional commit format:"
+            echo "   feat: add new theme"
+            echo "   fix: correct color values"
+            echo "   docs: update README"
+            echo "   chore: update dependencies"
+            echo ""
+            echo "Your title: $PR_TITLE"
+            exit 1
+          fi
+
+          echo "✓ PR title follows conventional commit format"

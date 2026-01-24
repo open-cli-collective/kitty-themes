@@ -1,0 +1,150 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Count themes
+        id: themes
+        run: |
+          COUNT=$(ls -1 themes/*.conf | wc -l | tr -d ' ')
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
+
+      - name: Create release archive
+        run: |
+          mkdir -p dist
+          tar -czvf "dist/kitty-themes-${{ steps.version.outputs.version }}.tar.gz" themes/
+
+      - name: Generate checksums
+        run: |
+          cd dist
+          sha256sum *.tar.gz > checksums.txt
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ steps.version.outputs.version }}
+          body: |
+            ## kitty-themes ${{ steps.version.outputs.version }}
+
+            A collection of ${{ steps.themes.outputs.count }} themes for the kitty terminal emulator.
+
+            ### Installation
+
+            **Homebrew:**
+            ```bash
+            brew install open-cli-collective/tap/kitty-themes
+            ```
+
+            **Manual:**
+            ```bash
+            git clone https://github.com/open-cli-collective/kitty-themes.git ~/.config/kitty/kitty-themes
+            ```
+
+            Then add to your `kitty.conf`:
+            ```
+            include ~/.config/kitty/kitty-themes/themes/Dracula.conf
+            ```
+          files: |
+            dist/kitty-themes-${{ steps.version.outputs.version }}.tar.gz
+            dist/checksums.txt
+          generate_release_notes: true
+
+  update-homebrew:
+    name: Update Homebrew Tap
+    runs-on: ubuntu-latest
+    needs: create-release
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Download release archive
+        run: |
+          curl -L -o kitty-themes.tar.gz \
+            "https://github.com/open-cli-collective/kitty-themes/archive/refs/tags/${{ steps.version.outputs.version }}.tar.gz"
+
+      - name: Calculate SHA256
+        id: sha
+        run: |
+          SHA=$(sha256sum kitty-themes.tar.gz | cut -d' ' -f1)
+          echo "sha256=$SHA" >> $GITHUB_OUTPUT
+
+      - name: Update Homebrew formula
+        env:
+          TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          VERSION_NUM="${VERSION#v}"  # Remove 'v' prefix
+          SHA="${{ steps.sha.outputs.sha256 }}"
+
+          # Clone the tap repo
+          git clone "https://x-access-token:${TAP_GITHUB_TOKEN}@github.com/open-cli-collective/homebrew-tap.git" tap
+          cd tap
+
+          # Create or update the formula
+          cat > Formula/kitty-themes.rb << 'FORMULA'
+          class KittyThemes < Formula
+            desc "Collection of themes for the kitty terminal emulator"
+            homepage "https://github.com/open-cli-collective/kitty-themes"
+            url "https://github.com/open-cli-collective/kitty-themes/archive/refs/tags/VERSION_PLACEHOLDER.tar.gz"
+            sha256 "SHA_PLACEHOLDER"
+            license "MIT"
+
+            def install
+              pkgshare.install Dir["themes/*.conf"]
+            end
+
+            def caveats
+              <<~EOS
+                Themes installed to:
+                  #{pkgshare}
+
+                To use a theme, add to your kitty.conf:
+                  include #{pkgshare}/Dracula.conf
+
+                Or apply temporarily (requires remote control):
+                  kitty @ set-colors -a "#{pkgshare}/Dracula.conf"
+
+                List available themes:
+                  ls #{pkgshare}
+              EOS
+            end
+
+            test do
+              assert_predicate pkgshare/"Dracula.conf", :exist?
+            end
+          end
+          FORMULA
+
+          # Replace placeholders
+          sed -i "s/VERSION_PLACEHOLDER/${VERSION}/g" Formula/kitty-themes.rb
+          sed -i "s/SHA_PLACEHOLDER/${SHA}/g" Formula/kitty-themes.rb
+
+          # Commit and push
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Formula/kitty-themes.rb
+          git commit -m "kitty-themes: update to ${VERSION}" || echo "No changes to commit"
+          git push
