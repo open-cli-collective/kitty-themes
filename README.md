@@ -15,6 +15,7 @@
 
 - [About](#about)
 - [Installation](#installation)
+  - [Homebrew](#homebrew)
   - [Source Code](#source-code)
   - [Conda](#conda)
 - [License](#license)
@@ -32,6 +33,22 @@ the previews for each theme in the [section](#previews) below or in this other
 
 ## Installation
 
+### Homebrew
+
+The easiest way to install on macOS or Linux:
+
+```bash
+brew install open-cli-collective/tap/kitty-themes
+```
+
+Then add to your `kitty.conf`:
+
+```
+include /opt/homebrew/opt/kitty-themes/share/kitty-themes/Dracula.conf
+```
+
+> **Note:** On Intel Macs or Linux, the path is `/usr/local/opt/kitty-themes/share/kitty-themes/`
+
 ### Source Code
 
 1. If you want to download and use one of these theme you have two options:
@@ -41,7 +58,7 @@ the previews for each theme in the [section](#previews) below or in this other
       ```
    - or download just one theme:
       ```bash
-      THEME=https://raw.githubusercontent.com/open-cli-collective/kitty-themes/master/themes/3024_Day.conf
+      THEME=https://raw.githubusercontent.com/open-cli-collective/kitty-themes/main/themes/3024_Day.conf
       wget "$THEME" -P ~/.config/kitty/kitty-themes/themes
       ```
 
