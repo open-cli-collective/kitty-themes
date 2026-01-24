@@ -14,6 +14,7 @@ A collection of color themes for the [kitty terminal emulator](https://github.co
 - `scripts/` - Validation and utility scripts
 - `.tools/` - Legacy scripts for theme conversion and preview generation
 - `.github/workflows/` - CI/CD pipelines
+- `CHANGELOG.md` - Release history following Keep a Changelog format
 
 ## Common Commands
 
@@ -39,6 +40,7 @@ Each theme is a `.conf` file with kitty color configuration:
 - Base version in `version.txt` (e.g., `2.0`)
 - Releases tagged as `v{BASE}.{RUN_NUMBER}` (e.g., `v2.0.42`)
 - Auto-release triggered by `feat:` or `fix:` commits to main
+- Update `CHANGELOG.md` when making significant changes
 
 ## Conventional Commits
 
