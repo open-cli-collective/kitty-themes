@@ -7,6 +7,9 @@ on:
       - 'themes/**'
       - 'version.txt'
 
+permissions:
+  contents: write
+
 jobs:
   create-release-tag:
     name: Create Release Tag
@@ -20,8 +23,13 @@ jobs:
       startsWith(github.event.head_commit.message, 'fix(')
 
     steps:
+      # TAP_GITHUB_TOKEN (a PAT) is required here instead of the default GITHUB_TOKEN
+      # because tag pushes made with GITHUB_TOKEN do not trigger other workflows.
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.TAP_GITHUB_TOKEN }}
 
       - name: Read version
         id: version
@@ -32,11 +40,8 @@ jobs:
           echo "Version: $VERSION"
 
       - name: Create and push tag
-        env:
-          # Use PAT to trigger release workflow (GITHUB_TOKEN doesn't trigger workflows)
-          GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag -a "${{ steps.version.outputs.version }}" -m "Release ${{ steps.version.outputs.version }}"
-          git push origin "${{ steps.version.outputs.version }}"
+          git tag ${{ steps.version.outputs.version }}
+          git push origin ${{ steps.version.outputs.version }}
