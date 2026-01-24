@@ -13,23 +13,15 @@
 [![License: MIT][license-badge]][license]
 [![All Contributors](https://img.shields.io/badge/all_contributors-9-green.svg?style=for-the-badge)](#contributors)
 
-- [About](#about)
 - [Installation](#installation)
   - [Homebrew](#homebrew)
   - [Source Code](#source-code)
   - [Conda](#conda)
+- [About](#about)
+- [Why This Fork?](#why-this-fork)
 - [License](#license)
 - [Bring me to the previews!](#previews)
 - [Contributors](#contributors)
-
-## About
-
-This is a community-maintained fork of [kitty-themes](https://github.com/dexpota/kitty-themes), originally created by [Fabrizio Destro](https://github.com/dexpota).
-
-In this repository you can find a set of themes to personalize your kitty
-terminal, these have been ported from [iTerm2-Color-Schemes][iterm2-themes]. You can find
-the previews for each theme in the [section](#previews) below or in this other
-[repository](kitty-themes-previews).
 
 ## Installation
 
@@ -77,12 +69,28 @@ include /opt/homebrew/opt/kitty-themes/share/kitty-themes/Dracula.conf
 
 ### Conda
 
-If you using the ``conda`` package manager, you may also install these themes
-with the following command:
+> **Note:** The conda-forge package may be outdated as it pulls from the original repository. We recommend using Homebrew or cloning directly from this fork.
+
+If you're using the `conda` package manager:
 
 ```bash
 conda install -c conda-forge kitty-themes
 ```
+
+## About
+
+A collection of 169+ themes for the [kitty terminal emulator](https://github.com/kovidgoyal/kitty), ported from [iTerm2-Color-Schemes][iterm2-themes]. You can find the previews for each theme in the [section below](#previews).
+
+## Why This Fork?
+
+This is a community-maintained fork of [kitty-themes](https://github.com/dexpota/kitty-themes), originally created by [Fabrizio Destro](https://github.com/dexpota).
+
+The original repository hasn't been actively maintained since 2019. This fork provides:
+
+- **Active maintenance** - Bug fixes and new themes
+- **Homebrew distribution** - Easy installation via `brew install`
+- **Automated releases** - CI/CD pipeline with versioned releases
+- **Theme validation** - All themes are validated for correct format
 
 ## License
 
