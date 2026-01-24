@@ -39,8 +39,21 @@ Each theme is a `.conf` file with kitty color configuration:
 
 - Base version in `version.txt` (e.g., `2.0`)
 - Releases tagged as `v{BASE}.{RUN_NUMBER}` (e.g., `v2.0.42`)
-- Auto-release triggered by `feat:` or `fix:` commits to main
-- Update `CHANGELOG.md` when making significant changes
+- Auto-release triggered by `feat:` or `fix:` commits that touch `themes/**` or `version.txt`
+- Bump `version.txt` for major changes (new features, breaking changes)
+
+## Contributing Workflow
+
+1. **Create issue** describing the change (optional for small fixes)
+2. **Create branch** from `main` with conventional prefix (`feat/`, `fix/`, `docs/`)
+3. **Make changes** and validate with `./scripts/validate-themes.sh themes`
+4. **Update docs** as needed:
+   - New themes → no README update needed (auto-counted)
+   - New features → update README if user-facing
+   - Releases → update CHANGELOG.md with changes
+5. **Open PR** with conventional commit title
+6. **Wait for CI** (theme validation + commit message check)
+7. **Merge** (squash merge preferred)
 
 ## Conventional Commits
 
@@ -53,9 +66,13 @@ All commits must follow conventional commit format:
 
 ## CI/CD Pipeline
 
-1. **PR opened** → Theme validation runs
-2. **Merged to main** → If `feat:`/`fix:`, auto-release creates tag
-3. **Tag pushed** → GitHub release created, Homebrew tap updated
+1. **PR opened** → Theme validation + commit message check
+2. **Merged to main** → Auto-release runs if:
+   - Commit starts with `feat:` or `fix:`
+   - AND changes touch `themes/**` or `version.txt`
+3. **Tag pushed** → Release workflow creates GitHub release + updates Homebrew tap
+
+**No release triggered by:** `docs:`, `chore:`, `ci:`, `test:`, `refactor:` commits, or changes only to workflows/scripts/docs.
 
 ## Distribution
 
