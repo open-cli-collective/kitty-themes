@@ -57,7 +57,7 @@ Each theme is a `.conf` file with kitty color configuration:
 
 ## Conventional Commits
 
-All commits must follow conventional commit format:
+All commits must follow conventional commit format. **Never mention Claude, LLMs, or AI in commit messages or PR descriptions.**
 - `feat:` - New theme (triggers release)
 - `fix:` - Theme correction (triggers release)
 - `docs:` - Documentation only
@@ -78,3 +78,43 @@ All commits must follow conventional commit format:
 
 - **Homebrew**: `brew install open-cli-collective/tap/kitty-themes`
 - **Manual**: Clone repo to `~/.config/kitty/kitty-themes`
+
+## Importing from Original Repo
+
+The original [dexpota/kitty-themes](https://github.com/dexpota/kitty-themes) has been inactive since 2019 with many unmerged PRs and open issues. We selectively import valuable contributions.
+
+### Tracking File
+
+`import-issues.md` tracks all original repo issues/PRs:
+- **Pending** - Items to be addressed (linked to our issues)
+- **Low Priority** - Items that need evaluation or manual work
+- **Completed** - Items we've imported (organized by our PR)
+- **Ignored** - Items we won't fix (with reasoning)
+
+**Always check `import-issues.md` before working on original repo items to avoid duplicate work.**
+
+### Import Process
+
+1. **Evaluate** - Check if theme/fix is valuable and not already done
+2. **Fetch config** - Use `gh api repos/dexpota/kitty-themes/pulls/XX/files --jq '.[].patch'`
+3. **Create theme file** - Add `cursor_text_color` if missing
+4. **Validate** - Run `./scripts/validate-themes.sh themes`
+5. **Commit** - One commit per theme/fix with `Ref dexpota/kitty-themes#XX`
+6. **Update tracking** - Move item to Completed in `import-issues.md`
+
+### Commit Format for Imports
+
+```
+feat: add ThemeName theme
+
+Ref dexpota/kitty-themes#XX
+```
+
+Or for fixes:
+```
+fix: correct colorX in ThemeName
+
+Ref dexpota/kitty-themes#XX
+```
+
+Note: Use `Ref` not `Closes` - we don't have permission to close issues on the original repo, and referencing creates a link without noise.
