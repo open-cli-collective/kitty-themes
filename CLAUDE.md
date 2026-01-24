@@ -10,37 +10,52 @@ A collection of color themes for the [kitty terminal emulator](https://github.co
 
 ## Repository Structure
 
-- `themes/` - Theme configuration files (180+ themes)
-- `.tools/` - Scripts for theme conversion and preview generation
+- `themes/` - Theme configuration files (169+ themes)
+- `scripts/` - Validation and utility scripts
+- `.tools/` - Legacy scripts for theme conversion and preview generation
+- `.github/workflows/` - CI/CD pipelines
+
+## Common Commands
+
+```bash
+# Validate all themes
+./scripts/validate-themes.sh themes
+
+# Test a theme (requires kitty remote control)
+kitty @ set-colors -a "themes/ThemeName.conf"
+
+# Test a theme (new instance)
+kitty -o include="themes/ThemeName.conf"
+```
 
 ## Theme File Format
 
 Each theme is a `.conf` file with kitty color configuration:
-- `background`, `foreground`, `cursor`, `selection_background`, `selection_foreground`
-- `color0`-`color7` (normal colors: black, red, green, yellow, blue, magenta, cyan, white)
-- `color8`-`color15` (bright variants)
-- Optional: `cursor_text_color`, tab colors (`active_tab_foreground`, etc.)
+- Required: `background`, `foreground`, `color0`-`color15`
+- Optional: `cursor`, `cursor_text_color`, `selection_background`, `selection_foreground`, tab colors
 
-## Adding a New Theme
+## Versioning & Releases
 
-1. Create a `.conf` file in `themes/` with proper color values
-2. Use existing themes as reference for the format
+- Base version in `version.txt` (e.g., `2.0`)
+- Releases tagged as `v{BASE}.{RUN_NUMBER}` (e.g., `v2.0.42`)
+- Auto-release triggered by `feat:` or `fix:` commits to main
 
-## Tools (in .tools/)
+## Conventional Commits
 
-- `convert.py` - Converts JSON theme files to kitty `.conf` format using Jinja2 templates
-- `generate_theme_preview.sh` / `generate_themes_previews.sh` - Generate preview images
-- `extract-vscode.sh` - Extract themes from VS Code
-- `palette.py` - Color palette utilities
+All commits must follow conventional commit format:
+- `feat:` - New theme (triggers release)
+- `fix:` - Theme correction (triggers release)
+- `docs:` - Documentation only
+- `chore:` - Maintenance, CI/CD
+- `refactor:` - Code restructuring
 
-## Testing a Theme
+## CI/CD Pipeline
 
-With kitty remote control enabled:
-```bash
-kitty @ set-colors -a "themes/ThemeName.conf"
-```
+1. **PR opened** → Theme validation runs
+2. **Merged to main** → If `feat:`/`fix:`, auto-release creates tag
+3. **Tag pushed** → GitHub release created, Homebrew tap updated
 
-Or start a new kitty instance:
-```bash
-kitty -o include="themes/ThemeName.conf"
-```
+## Distribution
+
+- **Homebrew**: `brew install open-cli-collective/tap/kitty-themes`
+- **Manual**: Clone repo to `~/.config/kitty/kitty-themes`
