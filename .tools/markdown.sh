@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 previews_root=$1
-# usually this value: https://raw.githubusercontent.com/dexpota/kitty-themes-website/master
+# usually this value: https://raw.githubusercontent.com/open-cli-collective/kitty-themes-website/master
 url_root=$2
 
 for f in $(find "$previews_root/previews" -maxdepth 1 -mindepth 1 -type d | sort); do
