@@ -10,7 +10,9 @@ function capture_osx() {
 	local title="$1"
 	local output="$2"
 	# get system id of the new created window
-	sys_id=$(./windowid.swift "kitty" "$title")
+	local script_dir
+	script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+	sys_id=$("$script_dir/windowid.swift" "kitty" "$title")
 	screencapture -wl"$sys_id" "$output"
 }
 

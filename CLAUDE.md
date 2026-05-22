@@ -29,6 +29,26 @@ kitty @ set-colors -a "themes/ThemeName.conf"
 kitty -o include="themes/ThemeName.conf"
 ```
 
+## Generating preview images
+
+See `.tools/README.md` for the full walkthrough. Quick orientation for future Claude sessions:
+
+```bash
+# Batch all themes
+find themes -maxdepth 1 -name '*.conf' -type f | sort | ./.tools/generate_themes_previews.sh
+
+# Just a subset
+printf 'themes/Foo.conf\nthemes/Bar.conf\n' | ./.tools/generate_themes_previews.sh
+```
+
+Output lands in `_previews/<ThemeName>/preview.png`; the repo's tracked directory is `previews/` (rename/move after generation).
+
+**High-friction gotchas — read `.tools/README.md` first if regenerating:**
+- macOS Screen Recording permission must be granted to `/Applications/kitty.app` (not the homebrew CLI symlink), with a full kitty Cmd+Q + relaunch afterwards. Without it, the script appears to run but silently produces no PNGs.
+- Don't pipe `ls themes/*.conf` — `ls` aliases break the pipeline. Use `find`.
+- The orchestrator changes kitty's global font size during capture. Run `kitty @ set-font-size <N>` afterwards to restore.
+- `kitty.conf` needs temporary `allow_remote_control yes`, `listen_on unix:/tmp/kitty`, and `hide_window_decorations yes` for the run.
+
 ## Theme File Format
 
 Each theme is a `.conf` file with kitty color configuration:

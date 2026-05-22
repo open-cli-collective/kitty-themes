@@ -1,0 +1,6 @@
+
+# Preview generation build output (canonical tracked dir is previews/)
+_previews/
+
+# macOS
+.DS_Store
