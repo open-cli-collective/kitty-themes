@@ -16,7 +16,8 @@ conf_filename=$(basename "$theme")
 lockfile=$(mktemp)
 
 kitty @ set-colors --match id:"$id" "$theme"
-kitty @ send-text --match id:"$id" "clear && figlet -f digital -t \"$conf_filename\" && unbuffer ./color_table.sh && rm \"$lockfile\"\n"
+kitty @ send-text --match id:"$id" "clear && figlet -f digital \"$conf_filename\" && unbuffer ./color_table.sh && rm \"$lockfile\"\n"
 
-# simple sync mechanism, wait for the lockfile to be removed
-( echo "$lockfile" | entr "false" 1>/dev/null 2>&1 ) || capture themes "$preview_filename"
+# wait for the kitty subshell to finish rendering (it deletes the lockfile when done)
+while [ -f "$lockfile" ]; do sleep 0.05; done
+capture themes "$preview_filename"
